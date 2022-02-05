@@ -10,6 +10,8 @@ class Pokemon
 
     private int $apiId;
 
+    private ?User $trainer;
+
     public function getName(): string
     {
         return $this->name;
@@ -42,6 +44,18 @@ class Pokemon
     public function setApiId(int $apiId): self
     {
         $this->apiId = $apiId;
+
+        return $this;
+    }
+
+    public function getTrainer(): ?User
+    {
+        return $this->trainer;
+    }
+
+    public function setTrainer(?User $trainer): self
+    {
+        $this->trainer = $trainer;
 
         return $this;
     }

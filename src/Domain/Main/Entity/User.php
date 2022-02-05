@@ -12,6 +12,13 @@ class User
 
     private string $password;
 
+    /**
+     * An array of Pokemons.
+     *
+     * @var Pokemon[]
+     */
+    private $pokemons = [];
+
     public function getUsername(): string
     {
         return $this->username;
@@ -44,6 +51,37 @@ class User
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Pokemon[]
+     */
+    public function getPokemons()
+    {
+        return $this->pokemons;
+    }
+
+    public function addPokemon(Pokemon $pokemon): self
+    {
+        if (!in_array($pokemon, $this->pokemons, true)) {
+            $this->pokemons[] = $pokemon;
+            $pokemon->setTrainer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePokemon(Pokemon $pokemon): self
+    {
+        if (($key = array_search($pokemon, $this->pokemons, true)) !== false) {
+            unset($this->pokemons[$key]);
+            // set the owning side to null (unless already changed)
+            if ($pokemon->getTrainer() === $this) {
+                $pokemon->setTrainer(null);
+            }
+        }
 
         return $this;
     }

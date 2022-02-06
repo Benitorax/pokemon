@@ -9,23 +9,87 @@ jobs:
         name: Docker build
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout
-              uses: actions/checkout@v2
-            - name: Pull images
-              run: docker-compose pull
-            - name: Start services
-              run: docker-compose up --build -d
-            - name: Wait for services
-              run: |
-                  while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php)")"; do
-                    case $status in
-                      starting) sleep 1;;
-                      healthy) exit 0;;
-                      unhealthy) exit 1;;
-                    esac
-                  done
-                  exit 1
-            - name: Check HTTP reachability
-              run: curl http://localhost
-            - name: Check HTTPS reachability
-              run: curl -k https://localhost
+          - name: Checkout
+            uses: actions/checkout@v2
+          - name: Pull images
+            run: docker-compose pull
+          - name: Start services
+            run: docker-compose up --build -d
+          - name: Wait for services
+            run: |
+                while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php)")"; do
+                  case $status in
+                    starting) sleep 1;;
+                    healthy) exit 0;;
+                    unhealthy) exit 1;;
+                  esac
+                done
+                exit 1
+          - name: Check HTTP reachability
+            run: curl http://localhost
+          - name: Check HTTPS reachability
+            run: curl -k https://localhost
+          - name: Cache Composer dependencies
+            uses: actions/cache@v2
+            with:
+              path: /tmp/composer-cache
+              key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
+          - name: Install dependencies
+            uses: php-actions/composer@v6
+          - name: Run tests
+            run: |
+              docker ps
+              docker exec pokemon_php_1 php ./vendor/bin/phpunit
+
+    phpcs:
+        name: PHP CodeSniffer
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
+          - name: Cache Composer dependencies
+            uses: actions/cache@v2
+            with:
+              path: /tmp/composer-cache
+              key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          - name: Install dependencies
+            uses: php-actions/composer@v6
+          - name: PHPCS check
+            run: |
+              ./vendor/bin/phpcbf
+              ./vendor/bin/phpcs
+
+    phpstan:
+        name: PHPStan
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
+          - name: Cache Composer dependencies
+            uses: actions/cache@v2
+            with:
+              path: /tmp/composer-cache
+              key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          - name: Install dependencies
+            uses: php-actions/composer@v6
+          - name: PHPStan check
+            run: |
+              ./vendor/bin/phpstan
+
+    psalm:
+        name: Psalm
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
+          - name: Cache Composer dependencies
+            uses: actions/cache@v2
+            with:
+              path: /tmp/composer-cache
+              key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          - name: Install dependencies
+            uses: php-actions/composer@v6
+          - name: Psalm check
+            run: |
+              ./vendor/bin/psalm

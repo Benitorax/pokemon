@@ -66,4 +66,17 @@ class UserManagerTest extends TestCase
 
         $this->manager->addPokemon($pokemon, $user);
     }
+
+    public function testRemovePokemon(): void
+    {
+        $pokemon = new Pokemon();
+        $user = new User();
+        $this->userHandler
+            ->expects($this->once())
+            ->method('removePokemon')
+            ->with($pokemon, $user)
+        ;
+
+        $this->manager->removePokemon($pokemon, $user);
+    }
 }

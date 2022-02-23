@@ -62,4 +62,17 @@ class UserHandlerTest extends TestCase
         $this->handler->addPokemon($pokemon, $user);
         $this->assertContains($pokemon, $user->getPokemons());
     }
+
+    public function testRemovePokemon(): void
+    {
+        $pokemon = new Pokemon();
+        $user = new User();
+        $user->addPokemon($pokemon);
+        $this->entityManager
+            ->expects($this->once())
+            ->method('flush')
+        ;
+        $this->handler->removePokemon($pokemon, $user);
+        $this->assertNotContains($pokemon, $user->getPokemons());
+    }
 }

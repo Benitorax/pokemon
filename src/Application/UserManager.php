@@ -32,4 +32,9 @@ class UserManager
     {
         $this->handler->addPokemon($pokemon, $user);
     }
+
+    public function removePokemon(Pokemon $pokemon, User $user): void
+    {
+        $this->handler->removePokemon($pokemon, $user);
+    }
 }

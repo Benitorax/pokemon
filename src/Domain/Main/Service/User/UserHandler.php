@@ -4,6 +4,7 @@ namespace App\Domain\Main\Service\User;
 
 use App\Domain\Main\Entity\User;
 use App\Domain\Main\DTO\CreateUser;
+use App\Domain\Main\Entity\Pokemon;
 use App\Domain\Helper\EntityManagerInterface;
 
 class UserHandler
@@ -30,5 +31,18 @@ class UserHandler
         $this->entityManager->flush();
 
         return $user;
+    }
+
+    public function addPokemon(Pokemon $pokemon, User $user): void
+    {
+        $user->addPokemon($pokemon);
+        $this->entityManager->persist($pokemon);
+        $this->entityManager->flush();
+    }
+
+    public function removePokemon(Pokemon $pokemon, User $user): void
+    {
+        $user->removePokemon($pokemon);
+        $this->entityManager->flush();
     }
 }

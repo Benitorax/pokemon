@@ -2,8 +2,10 @@
 
 namespace App\Application;
 
+use App\Domain\Main\Entity\User;
 use App\Application\Mailer\Mailer;
 use App\Domain\Main\DTO\CreateUser;
+use App\Domain\Main\Entity\Pokemon;
 use App\Domain\Main\Service\User\UserHandler;
 
 class UserManager
@@ -24,5 +26,10 @@ class UserManager
     {
         $user = $this->handler->createAndSave($dto);
         $this->mailer->sendSubscription($user);
+    }
+
+    public function addPokemon(Pokemon $pokemon, User $user): void
+    {
+        $this->handler->addPokemon($pokemon, $user);
     }
 }

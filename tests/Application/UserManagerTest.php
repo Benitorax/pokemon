@@ -7,6 +7,7 @@ use App\Application\UserManager;
 use App\Domain\Main\Entity\User;
 use App\Application\Mailer\Mailer;
 use App\Domain\Main\DTO\CreateUser;
+use App\Domain\Main\Entity\Pokemon;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Domain\Main\Service\User\UserHandler;
 
@@ -51,5 +52,18 @@ class UserManagerTest extends TestCase
             ->with($user);
         ;
         $this->manager->subscribeUser($dto);
+    }
+
+    public function testAddPokemon(): void
+    {
+        $pokemon = new Pokemon();
+        $user = new User();
+        $this->userHandler
+            ->expects($this->once())
+            ->method('addPokemon')
+            ->with($pokemon, $user)
+        ;
+
+        $this->manager->addPokemon($pokemon, $user);
     }
 }

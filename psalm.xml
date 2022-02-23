@@ -22,6 +22,8 @@
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="tests" />
+                <file name="src/Domain/Battle/Entity/AdventureTeam.php" />
+                <file name="src/Domain/Battle/Entity/FightTeam.php" />
             </errorLevel>
         </PropertyNotSetInConstructor>
         <MissingFile>

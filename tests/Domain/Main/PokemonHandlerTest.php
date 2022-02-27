@@ -29,9 +29,11 @@ class PokemonHandlerTest extends TestCase
     public function testFullRestore(): void
     {
         $this->entityManager->expects($this->once())->method('flush');
-        $pokemon = new Pokemon();
+        $this->pokemonApi->expects($this->once())->method('getPokemonFullHP')->willReturn(100);
+        $pokemon = (new Pokemon())->setApiId(5);
         $this->handler->fullRestore($pokemon);
         $this->assertFalse($pokemon->getIsKO());
+        $this->assertSame(100, $pokemon->getHP());
     }
 
     public function testRestoreHP(): void

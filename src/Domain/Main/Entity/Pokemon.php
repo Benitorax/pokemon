@@ -38,6 +38,20 @@ class Pokemon
         return $this;
     }
 
+    public function increaseHP(int $HP): self
+    {
+        $this->HP += $HP;
+
+        return $this;
+    }
+
+    public function decreaseHP(int $HP): self
+    {
+        $this->HP -= $HP;
+
+        return $this;
+    }
+
     public function getApiId(): int
     {
         return $this->apiId;

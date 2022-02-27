@@ -31,7 +31,7 @@ class PokemonHandler
 
     public function restoreHP(Pokemon $pokemon, int $HP): void
     {
-        $pokemon->setHp($HP);
+        $pokemon->increaseHP($HP);
         $this->entityManager->flush();
     }
 }

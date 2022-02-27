@@ -2,6 +2,11 @@
 
 namespace App\Domain\Helper;
 
+use App\Domain\Helper\EntityRepositoryInterface;
+
+/**
+ * The PHPDoc content is from Doctrine/ORM/EntityRepository class.
+ */
 interface EntityManagerInterface
 {
     /**
@@ -61,4 +66,15 @@ interface EntityManagerInterface
      * @return void
      */
     public function clear(string|null $objectName = null): void;
+
+    /**
+     * Returns the repository of given class name.
+     *
+     * @psalm-param class-string<T> $className
+     *
+     * @psalm-return EntityRepositoryInterface<T>
+     *
+     * @template T
+     */
+    public function getRepository($className);
 }

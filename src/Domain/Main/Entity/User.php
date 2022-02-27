@@ -12,6 +12,8 @@ class User
 
     private string $password;
 
+    private int $pokedollar = 0;
+
     /**
      * An array of Pokemons.
      *
@@ -82,6 +84,25 @@ class User
                 $pokemon->setTrainer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPokedollar(): int
+    {
+        return $this->pokedollar;
+    }
+
+    public function increasePokedollar(int $pokedollar): self
+    {
+        $this->pokedollar += $pokedollar;
+
+        return $this;
+    }
+
+    public function decreasePokedollar(int $pokedollar): self
+    {
+        $this->pokedollar -= $pokedollar;
 
         return $this;
     }

@@ -19,6 +19,10 @@ class ArenaHandler
 
     public function getRandomArena(): Arena
     {
-        return (new Arena())->setHabitat($this->pokemonApi->randomHabitat());
+        $arena = (new Arena())->setHabitat($this->pokemonApi->randomHabitat());
+        $this->entityManager->persist($arena);
+        $this->entityManager->flush();
+
+        return $arena;
     }
 }

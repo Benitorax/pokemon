@@ -28,6 +28,8 @@ class ArenaHandlerTest extends TestCase
 
     public function testGetRandomArena(): void
     {
+        $this->entityManager->expects($this->once())->method('persist');
+        $this->entityManager->expects($this->once())->method('flush');
         $this->assertInstanceOf(Arena::class, $this->handler->getRandomArena());
     }
 }

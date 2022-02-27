@@ -12,11 +12,11 @@ class FightTeam implements TeamInterface
 {
     use TeamTrait;
 
-    private Pokemon $pokemon1;
+    private ?Pokemon $pokemon1 = null;
 
-    private Pokemon $pokemon2;
+    private ?Pokemon $pokemon2 = null;
 
-    private Pokemon $pokemon3;
+    private ?Pokemon $pokemon3 = null;
 
     public function __construct(User $trainer = null)
     {
@@ -25,7 +25,7 @@ class FightTeam implements TeamInterface
         }
     }
 
-    public function getPokemon1(): Pokemon
+    public function getPokemon1(): ?Pokemon
     {
         return $this->pokemon1;
     }
@@ -37,7 +37,7 @@ class FightTeam implements TeamInterface
         return $this;
     }
 
-    public function getPokemon2(): Pokemon
+    public function getPokemon2(): ?Pokemon
     {
         return $this->pokemon2;
     }
@@ -49,7 +49,7 @@ class FightTeam implements TeamInterface
         return $this;
     }
 
-    public function getPokemon3(): Pokemon
+    public function getPokemon3(): ?Pokemon
     {
         return $this->pokemon3;
     }

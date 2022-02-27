@@ -12,6 +12,8 @@ class Pokemon
 
     private ?User $trainer;
 
+    private bool $isKO;
+
     public function getName(): string
     {
         return $this->name;
@@ -56,6 +58,18 @@ class Pokemon
     public function setTrainer(?User $trainer): self
     {
         $this->trainer = $trainer;
+
+        return $this;
+    }
+
+    public function getIsKO(): bool
+    {
+        return $this->isKO;
+    }
+
+    public function setIsKO(bool $isKO): self
+    {
+        $this->isKO = $isKO;
 
         return $this;
     }

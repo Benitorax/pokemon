@@ -8,12 +8,17 @@ use App\Domain\Main\Entity\Pokemon;
 interface PokemonApiInterface
 {
     /**
-     * Get random Habitat
+     * Returns random Habitat
      */
     public function randomHabitat(): Habitat;
 
     /**
-     * Get random pokemon from given habitat.
+     * Returns random pokemon from given habitat.
      */
     public function randomPokemonFromHabitat(Habitat $habitat): Pokemon;
+
+    /**
+     * Returns pokemon full HP of given id.
+     */
+    public function getPokemonFullHP(int $pokemonId): int;
 }
